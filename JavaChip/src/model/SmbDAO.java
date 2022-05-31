@@ -11,8 +11,10 @@ import java.sql.SQLException;
 
 
 public class SmbDAO {
-		
-
+		int cnt = 0;
+		Connection conn = null;	
+		PreparedStatement psmt=null;
+		ResultSet rs;
 	public int join(SmbDTO dto) {
 
 		// 1. 동적 로딩
@@ -20,9 +22,7 @@ public class SmbDAO {
 		// 동적 로딩할 class file 찾기!!
 
 	
-		int cnt = 0;
-		Connection conn = null;	
-		PreparedStatement psmt=null;
+		
 
 		try {
 			conn = connect();	
@@ -30,16 +30,16 @@ public class SmbDAO {
 			// 3. SQL문장 실행
 			
 			String id = dto.getId();
-			String pw = dto.getPw();
+			int pw = dto.getPw();
 			String n_name = dto.getName();
 			
 			
 			
-			String sql = "insert into j_user values(?, ?, ?)";
+			String sql = "insert into j_user(id, pw, n_name) values(?, ?, ?)";
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, id);
-			psmt.setString(2, pw);
+			psmt.setInt(2, pw);
 			psmt.setString(3, n_name);					
 			
 			// CRUD
@@ -60,7 +60,7 @@ public class SmbDAO {
 			System.out.println("로딩 실패");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//		e.printStackTrace();
 			System.out.println("회원가입 실패");
 		} finally {
 			// 4. 연결 종료 : 역순으로 닫는다!
@@ -89,9 +89,9 @@ public class SmbDAO {
 	
 	public void login(SmbDTO dto) {
 
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
+		 conn = null;
+		 psmt = null;
+		 rs = null;
 
 		String sql = "select pw from j_user where id = ?";
 
@@ -107,6 +107,7 @@ public class SmbDAO {
 					System.out.println("=======로그인 성공=======");
 				} else {
 					System.out.println("=======로그인 실패=======");
+					System.out.println("ID, PW를 확인하세요");
 				}
 			}
 
@@ -132,40 +133,60 @@ public class SmbDAO {
 	
 	
 	public void Ranking(SmbDTO dto) {
-		int cnt = 0;
-		Connection conn = null;
-		PreparedStatement psmt = null;
-
-		String sql = "select u.ID, u.N_NAME, r.POINT from ( select u.ID, u.N_NAME, r.POINT from j_user u, j_ranking r where u.ID = r.ID order by point desc) where rownum < 10 = ?";
+		
+	
 		try {
-			connect();
+			conn = connect();	
+			String sql = "select rownum, id, point from (select id, point from J_RANKING order by point desc) where rownum<4";
+			psmt = conn.prepareStatement(sql); // conn 통로 안에 prepareStatement()메소드를 psmt에 대입
+			
+			
+			
+			rs = psmt.executeQuery(); // executeQuery(): 행변화 x(select) / executeUpdate(): 행 변화를 주는
+										// sql문(insert, update, delete)
 
-			psmt.setString(1, dto.getId());
+			
 
-			psmt = conn.prepareStatement(sql);
-			cnt = psmt.executeUpdate();
+			while (rs.next()) {// 컬럼명에서 한칸내림 -> rs.next() true일때만 데이터 출력
+				String id = rs.getString(1);
+				String pw = rs.getString(2);
+				String name = rs.getString(3);
+
+				System.out.print(id + " \t");
+				System.out.print(pw + " \t");
+				System.out.println(name);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("DB 연결 실패");
-		} catch (ClassNotFoundException e) {
+		}
+		// 4. 연결 종료
+ catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		}
+
+		finally {
 			try {
-				if (psmt != null) {
+				if (rs != null) {
+					rs.close();
+				}
+				if (rs != null) {
 					psmt.close();
 				}
-				if (conn != null) {
+				if (rs != null) {
 					conn.close();
 				}
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
-
+		
+		
+		
 	}
-
+	
 	
 	
 	
