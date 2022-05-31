@@ -6,6 +6,7 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -86,20 +87,86 @@ public class SmbDAO {
 	
 	
 	
-	public int login(SmbDTO dto) {
-		
-		
-		
-		
-		
-		return -1;
-		
+	public void login(SmbDTO dto) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		String sql = "select pw from j_user where id = ?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setString(1, dto.getId());
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				String result = rs.getString("PW");
+				if (result.equals(dto.getPw())) {
+					System.out.println("=======로그인 성공=======");
+				} else {
+					System.out.println("=======로그인 실패=======");
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 	
 	
-	public void Ranking (SmbDTO dto) {
-		
+	public void Ranking(SmbDTO dto) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		String sql = "select u.ID, u.N_NAME, r.POINT from ( select u.ID, u.N_NAME, r.POINT from j_user u, j_ranking r where u.ID = r.ID order by point desc) where rownum < 10 = ?";
+		try {
+			connect();
+
+			psmt.setString(1, dto.getId());
+
+			psmt = conn.prepareStatement(sql);
+			cnt = psmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("DB 연결 실패");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null) {
+					psmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
+
+	
 	
 	
 	
