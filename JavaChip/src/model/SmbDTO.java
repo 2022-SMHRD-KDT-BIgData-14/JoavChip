@@ -13,7 +13,19 @@ public class SmbDTO {
 
 	}
 
+	public SmbDTO(String id, int c_no){	
+
+		this.id = id;
+		this.c_no = c_no;
+		
+	}
+
+	public SmbDTO(int c_no){	
+
 	
+		this.c_no = c_no;
+		
+	}
 	public SmbDTO(String id, String pw, String n_name, int c_no, int lv) {	
 
 		this.id = id;

@@ -2,6 +2,9 @@ package model;
 
 import java.util.Random;
 import java.util.Scanner;
+import ascii.bird;
+import ascii.dog;
+import ascii.rabbit;
 
 public class StartGame {
 
@@ -11,8 +14,11 @@ public class StartGame {
 	int lv = 0;
 	int num;
 	SmbDTO dto;
+	bird bird = new bird();
+	dog dog = new dog();
+	rabbit rabbit = new rabbit();
 
-	public void study() { // 등교 선택
+	public void study(int c_no) { // 등교 선택
 
 		System.out.println("등교완료");
 
@@ -43,29 +49,64 @@ public class StartGame {
 		System.out.println("포인트: " + point);
 	}
 
-	public void eat() { // 먹기 선택
-		System.out.println("먹기 이미지 출력");
+	public void eat(int c_no) { // 먹기 선택
+		switch (c_no) {
+		case 1 :
+			bird.birdEat();
+			break;
+
+		case 2 :
+			dog.dogEat();
+			break;
+		case 3 :
+			rabbit.rabbitEat();
+			break;
+		}
 		point += r.nextInt(10);
 		System.out.println("포인트:" + point);
 
 	}
 
-	public void play() { // 훈련 선택
+	public void play(int c_no) { // 훈련 선택
 		System.out.print("[1]복습 [2] 운동하기 >> ");
 		int play = sc.nextInt();
 		if (play == 1) {
+			
+			
 			System.out.println("복습 포인트를 획득하셨습니다.");
 			point += 5;
 		} else {
-			System.out.println("운동하기 이미지 출력");
+			switch (c_no) {
+			case 1 :
+				bird.birdPlay();
+				break;
+
+			case 2 :
+				dog.dogPlay();
+				break;
+			case 3 :
+				rabbit.rabbitPlay();
+				break;
+			}
 			point -= r.nextInt(10); // 포인트 랜덤으로 +,-
 
 		}
 		System.out.println("포인트: " + point);
 	}
 
-	public void sleep() { // 잠자기 선택
-		System.out.println("잠자기 이미지 출력");
+	public void sleep(int c_no) { // 잠자기 선택
+		switch (c_no) {
+		case 1 :
+			bird.birdSleep();
+			break;
+
+		case 2 :
+			dog.dogSleep();
+			break;
+		case 3 :
+			rabbit.rabbitSleep();
+			break;
+		}
 		point += r.nextInt(10); // 포인트 랜덤으로 +
 		System.out.println("포인트: " + point);
 	}
@@ -74,7 +115,7 @@ public class StartGame {
 
 	}
 
-	public boolean quiz(String id) {
+	public boolean quiz(String id, int c_no) {
 
 		
 		if (point >= 25 && point < 35) { // 포인트가 50점 이상일 시 퀴즈 이벤트

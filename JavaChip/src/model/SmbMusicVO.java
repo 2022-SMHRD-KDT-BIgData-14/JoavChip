@@ -1,4 +1,4 @@
-package music;
+package model;
 
 public class SmbMusicVO {
 	

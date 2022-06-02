@@ -3,115 +3,130 @@ package view;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ascii.bird;
+import ascii.dog;
+import ascii.rabbit;
 import javazoom.jl.player.MP3Player;
 import model.SmbDAO;
 import model.SmbDTO;
+import model.SmbMusicVO;
 import model.StartGame;
-import music.SmbMusicVO;
 
 public class SmbView {
-
 	public static void main(String[] args) {
-		ArrayList<SmbDAO> musicList = new ArrayList<SmbDAO>();
+		ArrayList<SmbDAO> musicList = new ArrayList<SmbDAO>();		
 		MP3Player mp3 = new MP3Player();
+		
+		
 
-		// join() ¸Ş¼Òµå È£Ãâ!!
+		// join() ë©”ì†Œë“œ í˜¸ì¶œ!!
 
 		Scanner sc = new Scanner(System.in);
 
 		SmbDTO dto;
 		SmbDAO dao;
-		// ¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä
-		// int menu = ½ºÄ³³Ê¸¦ ÅëÇØ¼­ Á¤¼ö ÀÔ·Â
-		// menu°¡ 1ÀÌ¸é
+		bird bird = new bird();
+		dog dog = new dog();
+		rabbit rabbit = new rabbit();
+		
+		// ë©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš”
+		// int menu = ìŠ¤ìºë„ˆë¥¼ í†µí•´ì„œ ì •ìˆ˜ ì…ë ¥
+		// menuê°€ 1ì´ë©´
 
-		// ====È¸¿ø°¡ÀÔ====
-		// ID¸¦ ÀÔ·ÂÇÏ¼¼¿ä >>
-		// PW¸¦ ÀÔ·ÂÇÏ¼¼¿ä >>
-		// n_nameÀ» ÀÔ·ÂÇÏ¼¼¿© >>
+		// ====íšŒì›ê°€ì…====
+		// IDë¥¼ ì…ë ¥í•˜ì„¸ìš” >>
+		// PWë¥¼ ì…ë ¥í•˜ì„¸ìš” >>
+		// n_nameì„ ì…ë ¥í•˜ì„¸ì—¬ >>
 
-		// È¸¿ø°¡ÀÔ ¼º°ø >> "È¸¿ø°¡ÀÔ ¿Ï·á"
-		// È¸¿ø°¡ÀÔ ½ÇÆĞ >> "Áßº¹µÈ IDÀÔ´Ï´Ù"
+		// íšŒì›ê°€ì… ì„±ê³µ >> "íšŒì›ê°€ì… ì™„ë£Œ"
+		// íšŒì›ê°€ì… ì‹¤íŒ¨ >> "ì¤‘ë³µëœ IDì…ë‹ˆë‹¤"
 
 		int cnt = 0;
 		dao = new SmbDAO();
-//		mp3.play(".\\music\\°æÄè-ºü¸¥-ÄÚ¸Şµğ-¿À¶ô-B005.mp3");
+		int c_no = 0;
+		mp3.play(".\\music\\ê²½ì¾Œ-ë¹ ë¥¸-ì½”ë©”ë””-ì˜¤ë½-B005.mp3");
 
 		while (true) {
-
-			System.out.println("¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä");
+			bird.start();			
+		
+			System.out.println("ë©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš”");
 			System.out.print("[1] Join [2] Login [3] Ranking [4] Exit >>");
 			int munu = sc.nextInt();
 
 			if (munu == 1) {
-				// È¸¿ø°¡ÀÔ ±â´É
+				// íšŒì›ê°€ì… ê¸°ëŠ¥
 				System.out.println("====JOIN====");
 				
-				System.out.print("ID¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+				System.out.print("IDë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 				String id = sc.next();
-				System.out.print("PW¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+				System.out.print("PWë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 				String pw = sc.next();
-				System.out.print("NICK_NAME¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+				System.out.print("NICK_NAMEë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 				String n_name = sc.next();
-				System.out.println("[1] Åä³¢ [2] °­¾ÆÁö [3] »õ");
-				System.out.print("Ä³¸¯ÅÍ ¹øÈ£¸¦ ¼±ÅÃÇÏ¼¼¿ä >> ");
-				int c_no = sc.nextInt();
+				System.out.println("[1] í† ë¼ [2] ê°•ì•„ì§€ [3] ìƒˆ");
+				System.out.print("ìºë¦­í„° ë²ˆí˜¸ë¥¼ ì„ íƒí•˜ì„¸ìš” >> ");
+				c_no = sc.nextInt();
 				dto = new SmbDTO(id, pw, n_name,c_no);
+				
 
 				cnt = dao.join(dto);
 
+				
+				
 				if (cnt > 0) {
-					System.out.println("È¸¿ø°¡ÀÔ ¼º°ø");
+					System.out.println("íšŒì›ê°€ì… ì„±ê³µ");
 				} else {
-					System.out.println("ID°¡ Áßº¹µÇ¾ú½À´Ï´Ù.");
+					System.out.println("IDê°€ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
 				}
 
 			} else if (munu == 2) {
 				System.out.println("====Login====");
-				System.out.print("ID¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+				System.out.print("IDë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 				String id = sc.next();
-				System.out.print("PW¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+				System.out.print("PWë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 				String pw = sc.next();
+				c_no=dao.c_nopint(id);
+				
 
 				dto = new SmbDTO(id, pw);
-				StartGame game = new StartGame(); // °ÔÀÓ½ÃÀÛ
+				StartGame game = new StartGame(); // ê²Œì„ì‹œì‘
 				int num=0;
 
 				int n = dao.login(dto);				
 				if (n == 1) {
 					while (true) {
-						System.out.print("[1]µî±³ [2]¸Ô±â [3]ÈÆ·Ã [4]ÀáÀÚ±â >> ");
+						System.out.print("[1]ë“±êµ [2]ë¨¹ê¸° [3]í›ˆë ¨ [4]ì ìê¸° >> ");
 						int select = sc.nextInt();
 
 						switch (select) {
 						case 1:
-							game.study();
+							game.study(c_no);
 							break;
 						case 2:
-							game.eat();
+							game.eat(c_no);
 							break;
 						case 3:
-							game.play();
+							game.play(c_no);
 							break;
 						case 4:
-							game.sleep();
+							game.sleep(c_no);
 							break;
-						}game.quiz(id);
+						}game.quiz(id, c_no);
 						
-						if(game.quiz(id))
+						if(game.quiz(id,c_no))
 						break;
 						
 					}
 
 				} else if (n == 2) {
-					System.out.println("¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä");
+					System.out.println("ë©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš”");
 					System.out.print("[1] Join [2] Login [3] Ranking [4] Exit >> ");
 					munu = sc.nextInt();
 
 					System.out.println("====Login====");
-					System.out.print("ID¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+					System.out.print("IDë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 					id = sc.next();
-					System.out.print("PW¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+					System.out.print("PWë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 					pw = sc.next();
 					dto = new SmbDTO(id, pw);
 				
@@ -120,24 +135,24 @@ public class SmbView {
 					n = dao.login(dto);
 					if(n==1) {
 						while (true) {
-							System.out.print("[1]µî±³ [2]¸Ô±â [3]ÈÆ·Ã [4]ÀáÀÚ±â >> ");
+							System.out.print("[1]ë“±êµ [2]ë¨¹ê¸° [3]í›ˆë ¨ [4]ì ìê¸° >> ");
 							int select = sc.nextInt();
 
 							switch (select) {
 							case 1:
-								game.study();
+								game.study(c_no);
 								break;
 							case 2:
-								game.eat();
+								game.eat(c_no);
 								break;
 							case 3:
-								game.play();
+								game.play(c_no);
 								break;
 							case 4:
-								game.sleep();
+								game.sleep(c_no);
 								break;
 							}
-							game.quiz(id);
+							game.quiz(id,c_no);
 							
 							
 					
@@ -160,7 +175,7 @@ public class SmbView {
 
 			else if (munu == 4) {
 
-				System.out.println("Á¾·á µÇ¾ú½À´Ï´Ù.");
+				System.out.println("ì¢…ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 				break;
 
 			}
