@@ -1,20 +1,18 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
+import java.util.Scanner;
 import ascii.bird;
 import ascii.dog;
 import ascii.rabbit;
 import javazoom.jl.player.MP3Player;
 import model.SmbDAO;
 import model.SmbDTO;
-import model.SmbMusicVO;
 import model.StartGame;
 
 public class SmbView {
 	public static void main(String[] args) {
-		ArrayList<SmbDAO> musicList = new ArrayList<SmbDAO>();		
+		
 		MP3Player mp3 = new MP3Player();
 		
 		
@@ -45,9 +43,9 @@ public class SmbView {
 		dao = new SmbDAO();
 		int c_no = 0;
 		mp3.play(".\\music\\경쾌-빠른-코메디-오락-B005.mp3");
+		bird.start();			
 
 		while (true) {
-			bird.start();			
 		
 			System.out.println("메뉴를 선택하세요");
 			System.out.print("[1] Join [2] Login [3] Ranking [4] Exit >>");
@@ -89,7 +87,7 @@ public class SmbView {
 				
 
 				dto = new SmbDTO(id, pw);
-				StartGame game = new StartGame(); // 게임시작
+				StartGame game = new StartGame(mp3); // 게임시작
 				int num=0;
 
 				int n = dao.login(dto);				
@@ -153,7 +151,6 @@ public class SmbView {
 								break;
 							}
 							game.quiz(id,c_no);
-							
 							
 					
 						}

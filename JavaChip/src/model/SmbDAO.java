@@ -149,7 +149,7 @@ public class SmbDAO {
 		}
 		// 4. 연결 종료
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}return c_no;
 
@@ -165,8 +165,9 @@ public class SmbDAO {
 
 			rs = psmt.executeQuery(); // executeQuery(): 행변화 x(select) / executeUpdate(): 행 변화를 주는
 
+			System.out.println(" ==== RANKING ====");
 			System.out.print("ID " + "\t");
-			System.out.print(" POINT" + "\t");
+			System.out.print("POINT" + "\t");
 			System.out.println(" LV ");
 
 			while (rs.next()) {// 컬럼명에서 한칸내림 -> rs.next() true일때만 데이터 출력
