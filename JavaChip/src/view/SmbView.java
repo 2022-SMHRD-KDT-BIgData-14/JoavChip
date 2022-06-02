@@ -8,9 +8,9 @@ import model.SmbDAO;
 import model.SmbDTO;
 import model.StartGame;
 import music.SmbMusicVO;
+
 public class SmbView {
-	
-	
+
 	public static void main(String[] args) {
 		ArrayList<SmbDAO> musicList = new ArrayList<SmbDAO>();
 		MP3Player mp3 = new MP3Player();
@@ -34,10 +34,11 @@ public class SmbView {
 		// 회원가입 실패 >> "중복된 ID입니다"
 
 		int cnt = 0;
-		mp3.play(".\\music\\경쾌-빠른-코메디-오락-B005.mp3");
-		
+		dao = new SmbDAO();
+//		mp3.play(".\\music\\경쾌-빠른-코메디-오락-B005.mp3");
+
 		while (true) {
-			
+
 			System.out.println("메뉴를 선택하세요");
 			System.out.print("[1] Join [2] Login [3] Ranking [4] Exit >>");
 			int munu = sc.nextInt();
@@ -53,7 +54,6 @@ public class SmbView {
 				String n_name = sc.next();
 
 				dto = new SmbDTO(id, pw, n_name);
-				dao = new SmbDAO();
 
 				cnt = dao.join(dto);
 
@@ -71,10 +71,10 @@ public class SmbView {
 				int pw = sc.nextInt();
 
 				dto = new SmbDTO(id, pw);
+				StartGame game = new StartGame(); // 게임시작
 
-				int n = dao.login(dto);
+				int n = dao.login(dto);				
 				if (n == 1) {
-					StartGame game = new StartGame(); // 게임시작
 
 					while (true) {
 						System.out.print("[1]등교 [2]먹기 [3]훈련 [4]잠자기 >> ");
@@ -102,19 +102,50 @@ public class SmbView {
 					System.out.print("[1] Join [2] Login [3] Ranking [4] Exit >> ");
 					munu = sc.nextInt();
 
+					System.out.println("====Login====");
+					System.out.print("ID를 입력하세요 >> ");
+					id = sc.next();
+					System.out.print("PW를 입력하세요 >> ");
+					pw = sc.nextInt();
+					dto = new SmbDTO(id, pw);
+					
+					n = dao.login(dto);
+					if(n==1) {
+						while (true) {
+							System.out.print("[1]등교 [2]먹기 [3]훈련 [4]잠자기 >> ");
+							int select = sc.nextInt();
+
+							switch (select) {
+							case 1:
+								game.study();
+								break;
+							case 2:
+								game.eat();
+								break;
+							case 3:
+								game.play();
+								break;
+							case 4:
+								game.sleep();
+								break;
+							}
+							game.quiz();
+						}
+
+					}
 				}
+
 			}
 
 			else if (munu == 3) {
-				
+
 				// 3. Ranking
-			
+
 				dto = new SmbDTO();
 				dao = new SmbDAO();
 				dao.Ranking(dto);
-				
-				
-							}
+
+			}
 
 			else if (munu == 4) {
 
