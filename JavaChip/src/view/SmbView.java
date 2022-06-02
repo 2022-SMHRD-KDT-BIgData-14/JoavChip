@@ -1,13 +1,19 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javazoom.jl.player.MP3Player;
 import model.SmbDAO;
 import model.SmbDTO;
 import model.StartGame;
-
+import music.SmbMusicVO;
 public class SmbView {
-
+	
+	
 	public static void main(String[] args) {
+		ArrayList<SmbDAO> musicList = new ArrayList<SmbDAO>();
+		MP3Player mp3 = new MP3Player();
 
 		// join() 메소드 호출!!
 
@@ -28,8 +34,10 @@ public class SmbView {
 		// 회원가입 실패 >> "중복된 ID입니다"
 
 		int cnt = 0;
-
+		mp3.play(".\\music\\경쾌-빠른-코메디-오락-B005.mp3");
+		
 		while (true) {
+			
 			System.out.println("메뉴를 선택하세요");
 			System.out.print("[1] Join [2] Login [3] Ranking [4] Exit >>");
 			int munu = sc.nextInt();
