@@ -94,7 +94,9 @@ public class SmbView {
 							game.sleep();
 							break;
 						}
-						game.quiz();
+						game.quiz(dto);
+						
+						break;
 					}
 
 				} else if (n == 2) {
@@ -129,7 +131,8 @@ public class SmbView {
 								game.sleep();
 								break;
 							}
-							game.quiz();
+							game.quiz(dto);
+							break;
 						}
 
 					}

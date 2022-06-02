@@ -177,6 +177,69 @@ public class SmbDAO {
 		}
 
 	}
+	
+public void RankingUpdate(SmbDTO dto) {
+		
+		try {
+			conn = connect();	
+			
+			// 3. SQL문장 실행
+			
+			String id = dto.getId();
+			int pw = dto.getPw();
+			int lv = dto.getLv();
+			
+			
+			
+			String sql = "insert into J_RANKING(id, point, lv) values(?, ?, ?)";
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, id);
+			psmt.setInt(2, pw);
+			psmt.setInt(3, lv);					
+			
+			// CRUD
+			// C : Create (Insert) 	회원가입
+			// R : Read (Select) 	회원조회
+			// U : Update (Update) 	회원변경
+			// D : Delete (Delete) 	회원삭제
+			// executeUpdate();	C, U, D
+			// executeQuery(); 	R
+			cnt = psmt.executeUpdate();
+		
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("로딩 실패");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+//		e.printStackTrace();
+			System.out.println("랭킹 등록 실패");
+		} finally {
+			// 4. 연결 종료 : 역순으로 닫는다!
+			// pmst 닫기!
+			// conn 닫기!			
+			
+			try {
+				if(psmt != null) {
+				psmt.close();
+				}
+				if(conn!= null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 
 	public void SmbMusicMain() {
 

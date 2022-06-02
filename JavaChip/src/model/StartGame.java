@@ -3,13 +3,15 @@ package model;
 import java.util.Random;
 import java.util.Scanner;
 
+import view.SmbView;
+
 public class StartGame {
 
 	Scanner sc = new Scanner(System.in);
 	Random r = new Random();
 	int point = 0;
 	int lv = 0;
-
+	SmbDTO dto;
 	public void study() { // 등교 선택
 
 		System.out.println("등교완료");
@@ -72,7 +74,7 @@ public class StartGame {
 
 	}
 
-	public void quiz() {
+	public void quiz(SmbDTO dto) {
 
 		if (point >= 25 && point < 35) { // 포인트가 50점 이상일 시 퀴즈 이벤트
 			System.out.println("========= EVENT Quiz ===========");
@@ -134,7 +136,7 @@ public class StartGame {
 			}
 			
 		}
-		if (point >= 300) {
+		if (20 >= 10) {
 			System.out.println("여기까지 왔군.. 이제 진짜 게임을 시작하지 집가고 싶나?? 그럼 문제를 맞춰!");
 			System.out.println("Q. 인터페이스 구현 키워드는(소문자로입력)? ");
 			String d = sc.next();
@@ -144,11 +146,12 @@ public class StartGame {
 			System.out.println("게임이 종료되었습니다. 랭킹에 등록하시겠습니까 ? ");
 			System.out.println("[1] 등록\t [2] 종료\t");
 			int commit = sc.nextInt();
-			
 			if (commit == 1) {
-				
+				SmbDAO dao = new SmbDAO();
+				dao.RankingUpdate(dto);
+				System.out.println("랭킹등록을 완료했습니다.");
 			} else {
-				
+				System.out.println("랭킹등록을 하지 않았습니다.");
 			}
 			
 			

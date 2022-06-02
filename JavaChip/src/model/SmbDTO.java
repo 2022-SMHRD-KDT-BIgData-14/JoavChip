@@ -1,5 +1,7 @@
 package model;
 
+import view.SmbView;
+
 public class SmbDTO {
 
 	
@@ -127,6 +129,13 @@ public class SmbDTO {
 	public SmbDTO(String when, String path) {
 		this.when = when;
 		this.path = path;
+	}
+
+
+	public SmbDTO(String id, int point, int lv) {
+		this.id = id;
+		this.point=point;
+		this.lv= lv;
 	}
 
 	// Getter & Setter
