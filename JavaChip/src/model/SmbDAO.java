@@ -28,16 +28,17 @@ public class SmbDAO {
 			// 3. SQL문장 실행
 
 			String id = dto.getId();
-			int pw = dto.getPw();
+			String pw = dto.getPw();
 			String n_name = dto.getName();
+			int c_no = dto.getC_no();
 
-			String sql = "insert into j_user(id, pw, n_name) values(?, ?, ?)";
+			String sql = "insert into j_user values(?, ?, ?, ?)";
 			psmt = conn.prepareStatement(sql);
 
 			psmt.setString(1, id);
-			psmt.setInt(2, pw);
+			psmt.setString(2, pw);
 			psmt.setString(3, n_name);
-
+			psmt.setInt(4, c_no);
 			// CRUD
 			// C : Create (Insert) 회원가입
 			// R : Read (Select) 회원조회
@@ -54,13 +55,11 @@ public class SmbDAO {
 			e.printStackTrace();
 			System.out.println("로딩 실패");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-//		e.printStackTrace();
+		
+
 			System.out.println("회원가입 실패");
 		} finally {
-			// 4. 연결 종료 : 역순으로 닫는다!
-			// pmst 닫기!
-			// conn 닫기!
+	
 
 			try {
 				if (psmt != null) {
@@ -93,11 +92,12 @@ public class SmbDAO {
 			psmt = conn.prepareStatement(sql);
 
 			psmt.setString(1, dto.getId());
-			psmt.setInt(2, dto.getPw());
+			psmt.setString(2, dto.getPw());
+			
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-
+				
 				System.out.println("=======로그인 성공=======");
 				n = 1;
 			} else {
@@ -130,24 +130,28 @@ public class SmbDAO {
 
 	}
 
-	public void Ranking(SmbDTO dto) {
+	public void Ranking() {
 
+		String sql = "select rownum, id, point, lv from (select id, point, lv from J_RANKING order by point desc) where rownum<4";
 		try {
 			conn = connect();
-			String sql = "select rownum, id, point from (select id, point from J_RANKING order by point desc) where rownum<4";
+			
 			psmt = conn.prepareStatement(sql); // conn 통로 안에 prepareStatement()메소드를 psmt에 대입
 
 			rs = psmt.executeQuery(); // executeQuery(): 행변화 x(select) / executeUpdate(): 행 변화를 주는
-										// sql문(insert, update, delete)
+			
+			System.out.print("ID " + "\t");
+			System.out.print(" POINT" + "\t");
+			System.out.println(" LV ");
 
 			while (rs.next()) {// 컬럼명에서 한칸내림 -> rs.next() true일때만 데이터 출력
-				String id = rs.getString(1);
-				String pw = rs.getString(2);
-				String name = rs.getString(3);
+				String id = rs.getString(2);
+				int point = rs.getInt(3);
+				int lv = rs.getInt(4);
 
 				System.out.print(id + " \t");
-				System.out.print(pw + " \t");
-				System.out.println(name);
+				System.out.print(point + " \t");
+				System.out.println(lv);
 			}
 
 		} catch (SQLException e) {
@@ -186,16 +190,16 @@ public void RankingUpdate(SmbDTO dto) {
 			// 3. SQL문장 실행
 			
 			String id = dto.getId();
-			int pw = dto.getPw();
+			int point = dto.getPoint();
 			int lv = dto.getLv();
 			
 			
 			
-			String sql = "insert into J_RANKING(id, point, lv) values(?, ?, ?)";
+			String sql = "insert into J_RANKING values(?, ?, ?)";
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, id);
-			psmt.setInt(2, pw);
+			psmt.setInt(2, point);
 			psmt.setInt(3, lv);					
 			
 			// CRUD

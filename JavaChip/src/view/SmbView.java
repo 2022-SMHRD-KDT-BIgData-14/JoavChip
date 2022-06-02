@@ -46,14 +46,17 @@ public class SmbView {
 			if (munu == 1) {
 				// 회원가입 기능
 				System.out.println("====JOIN====");
+				
 				System.out.print("ID를 입력하세요 >> ");
 				String id = sc.next();
 				System.out.print("PW를 입력하세요 >> ");
-				int pw = sc.nextInt();
+				String pw = sc.next();
 				System.out.print("NICK_NAME를 입력하세요 >> ");
 				String n_name = sc.next();
-
-				dto = new SmbDTO(id, pw, n_name);
+				System.out.println("[1] 토끼 [2] 강아지 [3] 새");
+				System.out.print("캐릭터 번호를 선택하세요 >> ");
+				int c_no = sc.nextInt();
+				dto = new SmbDTO(id, pw, n_name,c_no);
 
 				cnt = dao.join(dto);
 
@@ -68,7 +71,7 @@ public class SmbView {
 				System.out.print("ID를 입력하세요 >> ");
 				String id = sc.next();
 				System.out.print("PW를 입력하세요 >> ");
-				int pw = sc.nextInt();
+				String pw = sc.next();
 
 				dto = new SmbDTO(id, pw);
 				StartGame game = new StartGame(); // 게임시작
@@ -93,8 +96,9 @@ public class SmbView {
 						case 4:
 							game.sleep();
 							break;
-						}
-						if(game.quiz())
+						}game.quiz(id);
+						
+						if(game.quiz(id))
 						break;
 						
 					}
@@ -108,9 +112,11 @@ public class SmbView {
 					System.out.print("ID를 입력하세요 >> ");
 					id = sc.next();
 					System.out.print("PW를 입력하세요 >> ");
-					pw = sc.nextInt();
+					pw = sc.next();
 					dto = new SmbDTO(id, pw);
-					
+				
+
+
 					n = dao.login(dto);
 					if(n==1) {
 						while (true) {
@@ -131,7 +137,7 @@ public class SmbView {
 								game.sleep();
 								break;
 							}
-							game.quiz();
+							game.quiz(id);
 							
 							
 					
@@ -147,9 +153,8 @@ public class SmbView {
 
 				// 3. Ranking
 
-				dto = new SmbDTO();
 				dao = new SmbDAO();
-				dao.Ranking(dto);
+				dao.Ranking();
 
 			}
 

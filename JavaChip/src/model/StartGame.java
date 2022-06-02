@@ -74,7 +74,7 @@ public class StartGame {
 
 	}
 
-	public boolean quiz() {
+	public boolean quiz(String id) {
 
 		
 		if (point >= 25 && point < 35) { // 포인트가 50점 이상일 시 퀴즈 이벤트
@@ -83,7 +83,7 @@ public class StartGame {
 			System.out.print("①라이언고슬링 ②라이언긱스 ③라이언킹 ④라이언레이놀드 >> ");
 			int a = sc.nextInt();
 			if (a == 1) {
-				System.out.println("포인트: " + (point += 25));
+				System.out.println("포인트: " + (point += 30));
 				System.out.println("정답입니다. Level up !!");
 				System.out.println("level: " + ++lv);
 
@@ -93,7 +93,7 @@ public class StartGame {
 			}
 
 		}
-		if (point >= 75 && point < 90) {
+		if (point >= 75 && point < 80) {
 
 			System.out.println("Q.SQL의 데이터 정의문(DML)에 속하지 않는 것은?");
 			System.out.print("①CREATE ②DROP ③ALTER ④INSERT >> ");
@@ -105,6 +105,7 @@ public class StartGame {
 				int b = sc.nextInt();
 
 				if (b == 1) {
+					System.out.println("포인트: " + (point += 40));
 					System.out.println("정답입니다. Level up !!");
 					System.out.println("level: " + ++lv);
 
@@ -116,7 +117,7 @@ public class StartGame {
 			}
 
 		}
-		if (point >= 150 && point < 165) {
+		if (point >= 150 && point < 180) {
 
 			System.out.println("Q. 인터페이스를 사용하는 이유로 적절한 것은? ");
 			System.out.print("①유지보수 ②다형성 극소화 ③코드수정증가 ④모두정답 >> ");
@@ -149,6 +150,7 @@ public class StartGame {
 			int commit = sc.nextInt();
 			if (commit == 1) {
 				SmbDAO dao = new SmbDAO();
+				dto = new SmbDTO(id, point, lv);
 				dao.RankingUpdate(dto);
 				System.out.println("랭킹등록을 완료했습니다.");
 				return true;
