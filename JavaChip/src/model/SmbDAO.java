@@ -94,31 +94,37 @@ public class SmbDAO {
 	
 	
 	
-	public void login(SmbDTO dto) {
+	public int login(SmbDTO dto) {
 
-		 conn = null;
-		 psmt = null;
-		 rs = null;
-
+		conn = null;
+		psmt = null;
+		rs = null;
+		int n = 0;
 		String sql = "select pw from j_user where id = ?";
 
 		try {
+			conn = connect();
 			psmt = conn.prepareStatement(sql);
 
 			psmt.setString(1, dto.getId());
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				String result = rs.getString("PW");
+				String result = rs.getString(1);
 				if (result.equals(dto.getPw())) {
 					System.out.println("=======로그인 성공=======");
+					n = 1;
 				} else {
 					System.out.println("=======로그인 실패=======");
 					System.out.println("ID, PW를 확인하세요");
+					 n = 2;
 				}
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -135,6 +141,7 @@ public class SmbDAO {
 				e.printStackTrace();
 			}
 		}
+		return n;
 
 	}
 	

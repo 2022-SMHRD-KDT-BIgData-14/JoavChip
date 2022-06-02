@@ -64,7 +64,6 @@ public class SmbView {
 				}
 
 			} else if (munu == 2) {
-				// 2 Login 기능
 				System.out.println("====Login====");
 				System.out.print("ID를 입력하세요 >> ");
 				String id = sc.next();
@@ -72,29 +71,37 @@ public class SmbView {
 				int pw = sc.nextInt();
 
 				dto = new SmbDTO(id, pw);
-				dao = new SmbDAO();
 
-				StartGame game = new StartGame(); // 게임시작
+				int n = dao.login(dto);
+				if (n == 1) {
+					StartGame game = new StartGame(); // 게임시작
 
-				while (true) {
-					System.out.print("[1]등교 [2]먹기 [3]훈련 [4]잠자기 >> ");
-					int select = sc.nextInt();
+					while (true) {
+						System.out.print("[1]등교 [2]먹기 [3]훈련 [4]잠자기 >> ");
+						int select = sc.nextInt();
 
-					switch (select) {
-					case 1:
-						game.study();
-						break;
-					case 2:
-						game.eat();
-						break;
-					case 3:
-						game.play();
-						break;
-					case 4:
-						game.sleep();
-						break;
+						switch (select) {
+						case 1:
+							game.study();
+							break;
+						case 2:
+							game.eat();
+							break;
+						case 3:
+							game.play();
+							break;
+						case 4:
+							game.sleep();
+							break;
+						}
+						game.quiz();
 					}
-					game.quiz();
+
+				} else if (n == 2) {
+					System.out.println("메뉴를 선택하세요");
+					System.out.print("[1] Join [2] Login [3] Ranking [4] Exit >> ");
+					munu = sc.nextInt();
+
 				}
 			}
 
