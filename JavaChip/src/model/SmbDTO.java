@@ -1,10 +1,11 @@
 package model;
 
-import view.SmbView;
+
 
 public class SmbDTO {
 
 	
+
 	//field
 	private String id, n_name; 
 	int pw;

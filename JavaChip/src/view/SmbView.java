@@ -72,10 +72,10 @@ public class SmbView {
 
 				dto = new SmbDTO(id, pw);
 				StartGame game = new StartGame(); // 게임시작
+				int num=0;
 
 				int n = dao.login(dto);				
 				if (n == 1) {
-
 					while (true) {
 						System.out.print("[1]등교 [2]먹기 [3]훈련 [4]잠자기 >> ");
 						int select = sc.nextInt();
@@ -94,9 +94,9 @@ public class SmbView {
 							game.sleep();
 							break;
 						}
-						game.quiz(dto);
-						
+						if(game.quiz())
 						break;
+						
 					}
 
 				} else if (n == 2) {
@@ -131,11 +131,14 @@ public class SmbView {
 								game.sleep();
 								break;
 							}
-							game.quiz(dto);
-							break;
+							game.quiz();
+							
+							
+					
 						}
-
+						
 					}
+				
 				}
 
 			}
