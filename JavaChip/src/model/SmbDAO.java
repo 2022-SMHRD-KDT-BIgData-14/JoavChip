@@ -95,19 +95,19 @@ public class SmbDAO {
 
 			if (rs.next()) {
 
-				System.out.println("=======로그인 성공=======");
+				System.out.println("======= 로그인 성공 =======");
 				n = 1;
 			} else {
-				System.out.println("=======로그인 실패=======");
+				System.out.println("======= 로그인 실패 =======");
 				System.out.println("ID, PW를 확인하세요");
 				n = 2;
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		} finally {
 			try {
 				if (rs != null) {
@@ -120,7 +120,7 @@ public class SmbDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		return n;
@@ -145,12 +145,12 @@ public class SmbDAO {
 				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		// 4. 연결 종료
 		catch (ClassNotFoundException e) {
 			
-			e.printStackTrace();
+//			e.printStackTrace();
 		}return c_no;
 
 	}
@@ -181,12 +181,12 @@ public class SmbDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		// 4. 연결 종료
 		catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		finally {
@@ -202,7 +202,7 @@ public class SmbDAO {
 				}
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 
@@ -256,7 +256,7 @@ public class SmbDAO {
 				}
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 		}
@@ -296,7 +296,7 @@ public class SmbDAO {
 		// 컴파일(compile) 이후에 알 수 있는 에러들에 대해서도
 		// 예외처리를 해줘야 한다
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		System.out.println("드라이버 로딩 성공");
+		//System.out.println("드라이버 로딩 성공");
 		// 2. DB 연결
 
 		// 1) url 2)db_id 3) db_pw
@@ -306,7 +306,7 @@ public class SmbDAO {
 
 		conn = DriverManager.getConnection(url, db_id, db_pw);
 		if (conn != null) {
-			System.out.println("접속 성공");
+			// System.out.println("접속 성공");
 		}
 
 		return conn;
